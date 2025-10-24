@@ -34,7 +34,11 @@ interface Post {
   title: string;
 }
 
-export default function InstaProfile({ ref }: { ref: any }) {
+interface InstaProfileProps {
+  ref?: React.Ref<HTMLDivElement>; // Proper type for a div ref
+}
+
+export default function InstaProfile({ ref }: InstaProfileProps) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [messageText, setMessageText] = useState("");
