@@ -1,103 +1,575 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+import React from "react";
+import {
+  Wifi,
+  Signal,
+  Battery,
+  MousePointer2,
+  MousePointerClick,
+  Twitter,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
+import InstaProfile from "@/components/InstaProfile";
+import LoadingScreen from "@/components/LoadingScreen";
+import Link from "next/link";
+interface AppIconProps {
+  Icon: string;
+  name: string;
+  color?: string;
+  iconColor?: string;
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isLoading, setIsLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const mainImageRef = useRef(null);
+  const vectorImageRef = useRef(null);
+  const mainTextRef = useRef(null);
+  const introTextRef = useRef(null);
+  const secondSectionRef = useRef(null);
+  const secondSectionTextRef = useRef(null);
+  const secondSectionTabRef = useRef(null);
+  const mousePointerRef = useRef(null);
+  const splashScreeenRef = useRef(null);
+  const profileRef = useRef(null);
+  const hideIconsRef = useRef(null);
+  const designOuterRef = useRef(null);
+  const designInnerRef = useRef(null);
+  const garlandRef = useRef(null);
+  const garlandRef1 = useRef(null);
+
+  useEffect(() => {
+    const handleLoad = () => {
+      setIsLoading(false);
+    };
+
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+      return () => window.removeEventListener("load", handleLoad);
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    if (isLoading) return;
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    const ctx = gsap.context(() => {
+      const smoother = ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
+        smooth: 1.2,
+        effects: true,
+      });
+
+      gsap.fromTo(
+        mainImageRef.current,
+        { scale: 1 },
+        {
+          scale: 1.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: mainImageRef.current,
+            start: "top top",
+            end: "+=500",
+            scrub: 1,
+            pin: true,
+            markers: false,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        vectorImageRef.current,
+        { scale: 1 },
+        {
+          scale: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: vectorImageRef.current,
+            start: "top top",
+            end: "+=500",
+            scrub: 1,
+            markers: false,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        mainTextRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotationX: 0,
+        },
+        {
+          opacity: 0,
+          y: -50,
+          scale: 0.9,
+          rotationX: -15,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: mainTextRef.current,
+            start: "0% 50%",
+            end: "0% 40%",
+            scrub: 1,
+            markers: false,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        introTextRef.current,
+        {
+          opacity: 0,
+          y: 100,
+          scale: 0.8,
+          rotationX: 45,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotationX: 0,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: introTextRef.current,
+            start: "0% 60%",
+            end: "0% 40%",
+            scrub: 1,
+            markers: false,
+          },
+        }
+      );
+
+      ScrollTrigger.create({
+        trigger: secondSectionRef.current,
+        start: "top top",
+        end: "+=4000",
+        scrub: true,
+        pin: true,
+        markers: false,
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: secondSectionRef.current,
+          start: "top top",
+          end: "+=4000",
+          scrub: true,
+        },
+      });
+
+      tl.fromTo(
+        secondSectionTextRef.current,
+        {
+          opacity: 0,
+          y: 100,
+          scale: 0.8,
+          rotationX: 45,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotationX: 0,
+          ease: "power3.out",
+          duration: 3,
+        },
+        "+=0.5"
+      )
+        .fromTo(
+          secondSectionTabRef.current,
+          {
+            opacity: 0,
+            y: 100,
+            scale: 0.8,
+            rotationX: 45,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotationX: 0,
+            duration: 3,
+            ease: "power3.out",
+          },
+          "+=0.5"
+        )
+        .fromTo(
+          mousePointerRef.current,
+          {
+            y: 20,
+            x: 0,
+          },
+          {
+            y: 360,
+            x: 65,
+            ease: "power3.out",
+            duration: 5,
+          },
+          "+=0.5"
+        );
+
+      tl.fromTo(
+        splashScreeenRef.current,
+        {
+          scale: 0,
+        },
+        {
+          scale: 1,
+          duration: 2,
+          delay: 1,
+          ease: "power3.out",
+        },
+        "+=0.5"
+      ).fromTo(
+        profileRef.current,
+        {
+          scale: 0,
+        },
+        {
+          scale: 1,
+          duration: 2,
+          delay: 1,
+          ease: "power3.out",
+        },
+        "<"
+      );
+
+      tl.to(splashScreeenRef.current, {
+        opacity: 0,
+        duration: 1,
+        zIndex: -1,
+        ease: "power1.inOut",
+      })
+        .to(
+          hideIconsRef.current,
+          {
+            opacity: 0,
+            duration: 1,
+            zIndex: -1,
+            ease: "power1.inOut",
+          },
+          "<"
+        )
+        .to(
+          mousePointerRef.current,
+          {
+            opacity: 0,
+            duration: 1,
+            zIndex: -1,
+            ease: "power1.inOut",
+          },
+          "<"
+        )
+        .to({}, {}, "+=5");
+
+      gsap.to(designOuterRef.current, {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "linear",
+        transformOrigin: "50% 50%",
+      });
+
+      gsap.to(designInnerRef.current, {
+        rotation: -360,
+        duration: 4,
+        repeat: -1,
+        ease: "linear",
+        transformOrigin: "center center",
+      });
+
+      gsap.to(garlandRef.current, {
+        rotation: 8,
+        duration: 2,
+        transformOrigin: "top left",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(garlandRef1.current, {
+        rotation: -8,
+        duration: 2,
+        transformOrigin: "top right",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      return () => ctx.revert();
+    });
+  }, [isLoading]);
+
+  const AppIcon: React.FC<AppIconProps> = ({
+    Icon,
+    name,
+    color = "bg-white/20",
+  }) => {
+    return (
+      <div className="flex flex-col items-center justify-start space-y-1.5 w-20 h-20">
+        <img width="50" height="50" src={Icon} />
+
+        <span className="text-white text-xs font-light tracking-wide truncate w-full text-center">
+          {name}
+        </span>
+      </div>
+    );
+  };
+
+  return (
+    <>
+      {isLoading && <LoadingScreen />}
+
+      <div
+        id="smooth-wrapper"
+        style={{
+          opacity: isLoading ? 0 : 1,
+          transition: "opacity 0.5s ease-in-out",
+        }}
+      >
+        <div id="smooth-content">
+          <div
+            ref={mainImageRef}
+            className="h-screen w-screen bg-no-repeat relative bg-cover z-0" // <-- REMOVED 'fixed'
+            style={{ backgroundImage: `url("/images/somnath-temple.jpg")` }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div
+              ref={vectorImageRef}
+              className="h-full w-full bg-no-repeat bg-cover bg-top mix-blend-darken"
+              style={{ backgroundImage: `url("/images/vector1.jpg")` }}
+            ></div>
+
+            <div
+              ref={mainTextRef}
+              className="p-8 text-white absolute flex flex-col items-center bottom-35 left-0 right-0"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <h1
+                className="text-8xl font-bold mb-4"
+                style={{ fontFamily: "BystanderSans , sans-serif" }}
+              >
+                The Divine Odyssey
+              </h1>
+              <p
+                className="text-4xl  "
+                style={{ fontFamily: "America, sans-serif" }}
+              >
+                Traversing through temples, tales, and timeless traditions.
+              </p>
+            </div>
+
+            <div
+              ref={introTextRef}
+              className="p-8 text-white absolute flex flex-col items-center bottom-25 left-0 right-0"
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <h1
+                className="text-8xl font-bold mb-4"
+                style={{ fontFamily: "BystanderSans , sans-serif" }}
+              >
+                INTRODUCTION
+              </h1>
+              <p
+                className="text-1xl break-words whitespace-normal text-center max-w-[60ch]"
+                style={{ fontFamily: "CinzelDecorative, sans-serif" }}
+              >
+                Hi, I’m Shivam — a software developer and traveler who loves
+                discovering new places, learning local cultures, and capturing
+                memories along the way.
+              </p>
+            </div>
+          </div>
+
+          <div
+            ref={secondSectionRef}
+            className="relative bg-black h-screen w-screen z-20 mb-10"
           >
-            Read our docs
-          </a>
+            <div
+              ref={secondSectionTextRef}
+              className="text-white flex flex-col items-center justify-center p-3"
+            >
+              <h1
+                className="text-4xl font-bold mb-4"
+                style={{ fontFamily: "BystanderSans , sans-serif" }}
+              >
+                Moments Captured
+              </h1>
+              <p
+                className="text-1xl break-words whitespace-normal text-center max-w-[60ch]"
+                style={{ fontFamily: "CinzelDecorative, sans-serif" }}
+              >
+                A glimpse into my travel moments — captured, shared, and
+                remembered.
+              </p>
+            </div>
+
+            <div
+              ref={secondSectionTabRef}
+              className="absolute bottom-10 left-0 right-0 w-full max-w-4xl mx-auto bg-zinc-800 p-2.5 rounded-2xl shadow-4xl styled-scrollbar"
+            >
+              <div
+                className="h-full w-full aspect-[16/10] rounded-lg relative overflow-hidden flex flex-col bg-cover"
+                style={{
+                  backgroundImage: `url("/images/samsung-wallpaper.png")`,
+                }}
+              >
+                <img
+                  ref={splashScreeenRef}
+                  src="/images/InstaSplash.png"
+                  className="z-10 absolute h-full object-cover"
+                />
+                <InstaProfile ref={profileRef} />
+                <div
+                  ref={hideIconsRef}
+                  className="absolute top-0 right-0 h-10 px-6 flex justify-end items-center space-x-2 text-white/90"
+                >
+                  <span className="text-sm font-semibold">10:30</span>
+                  <Wifi size={16} />
+                  <Signal size={16} />
+                  <Battery size={16} />
+                </div>
+                <span
+                  ref={mousePointerRef}
+                  className="w-fit h-fit relative flex self-center"
+                >
+                  <MousePointer2 />
+                </span>
+
+                <div className="flex flex-col items-center justify-end h-full space-y-3">
+                  <div className="flex justify-center items-start space-x-10">
+                    <AppIcon
+                      Icon={"/icons/GalaxyStore.png"}
+                      name="Galaxy Store"
+                      color="bg-zinc-100"
+                      iconColor="#5A409A"
+                    />
+                    <AppIcon
+                      Icon={"/icons/Contacts.png"}
+                      name="Contacts"
+                      color="bg-blue-500"
+                    />
+                    <AppIcon
+                      Icon={"/icons/Email.png"}
+                      name="Email"
+                      color="bg-purple-600"
+                    />
+                    <AppIcon
+                      Icon={"/icons/Instagram.png"}
+                      name="Instagram"
+                      color="bg-gradient-to-br from-pink-500 via-red-500 to-orange-400"
+                    />
+                    <AppIcon
+                      Icon={"/icons/GalaxyThemes.png"}
+                      name="Galaxy Themes"
+                      color="bg-blue-600"
+                    />
+                    <AppIcon
+                      Icon={"/icons/Gallery.png"}
+                      name="Gallery"
+                      color="bg-white"
+                      iconColor="#4285F4"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-center space-x-8  px-6 py-4">
+                    <AppIcon
+                      Icon={"/icons/Messages.png"}
+                      name="Messages"
+                      color="bg-purple-200"
+                      iconColor="#603F8B"
+                    />
+                    <AppIcon
+                      Icon={"/icons/SamsungPay.png"}
+                      name="Samsung Pay"
+                      color="bg-orange-400"
+                    />
+                    <AppIcon
+                      Icon={"/icons/MyFiles.png"}
+                      name="My Files"
+                      color="bg-white"
+                      iconColor="#34A853"
+                    />
+                    <AppIcon
+                      Icon={"/icons/Phone.png"}
+                      name="Phone"
+                      color="bg-blue-500"
+                    />
+                    <AppIcon
+                      Icon={"/icons/SamsungInternet.png"}
+                      name="Samsung Internet"
+                      color="bg-white"
+                      iconColor="#DB4437"
+                    />
+                    <AppIcon
+                      Icon={"/icons/SamsungNotes.png"}
+                      name="Samsung Notes"
+                      color="bg-red-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            style={{ backgroundImage: `url("/images/TempleBackground.png")` }}
+            className="relative h-screen w-screen bg-cover bg-center overflow-hidden"
+          >
+            <div
+              ref={garlandRef}
+              className="left-40 h-[65vh] w-full absolute bg-no-repeat bg-contain bg-left"
+              style={{ backgroundImage: `url("/images/Garlands.png")` }}
+            ></div>
+            <div
+              ref={garlandRef1}
+              className="right-40 h-[65vh] w-full absolute bg-no-repeat bg-contain bg-right"
+              style={{ backgroundImage: `url("/images/Garlands.png")` }}
+            ></div>
+
+            <div
+              ref={designOuterRef}
+              style={{ backgroundImage: `url("/images/Design.png")` }}
+              className="absolute inset-0 bg-contain bg-no-repeat bg-center"
+            ></div>
+
+            <div className="absolute inset-0 flex flex-col items-center justify-end">
+              <div
+                style={{ backgroundImage: `url("/images/Subtract.png")` }}
+                className="absolute bottom-0 h-[82vh] w-full bg-center bg-contain bg-no-repeat"
+              >
+                <div
+                  style={{
+                    backgroundImage: `url("/images/SomnathMahadevVector1.png")`,
+                  }}
+                  className="mix-blend-multiply absolute top-[30vh] left-1/2 -translate-x-1/2 w-[20%] h-[18%] bg-center bg-contain bg-no-repeat"
+                ></div>
+
+                <div
+                  style={{
+                    fontFamily: "BystanderSans, sans-serif",
+                    color: "#FBF3E5",
+                  }}
+                  className="absolute bottom-48 w-full text-[10vh] flex justify-center"
+                >
+                  JAI SOMNATH
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+    </>
   );
 }
