@@ -215,3 +215,23 @@ body::-webkit-scrollbar {
     @apply bg-background text-foreground;
   }
 }
+
+.line {
+  stroke:  #fffce1;
+  stroke-width: 2px;
+}
+
+.ball {
+  fill: #fffce1;
+  visibility: hidden;
+}
+
+.infoCard {
+  fill: #fffce1;
+  font-size: 5px;
+  visibility: hidden;
+}
+
+.theLine {
+  stroke: #fffce1;
+}

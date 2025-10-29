@@ -43,7 +43,7 @@ export default function Home() {
   const designInnerRef = useRef(null);
   const garlandRef = useRef(null);
   const garlandRef1 = useRef(null);
-
+  const screenWidth = window.innerWidth;
   useEffect(() => {
     const handleLoad = () => {
       setIsLoading(false);
@@ -60,13 +60,26 @@ export default function Home() {
   useLayoutEffect(() => {
     if (isLoading) return;
 
+    let xTarget, yTarget;
+    if (screenWidth < 640) {
+      xTarget = 65;
+      yTarget = 540;
+    } else if (screenWidth < 1024) {
+      xTarget = 50;
+      yTarget = 300;
+    } else {
+      xTarget = 65;
+      yTarget = 360;
+    }
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    ScrollTrigger.normalizeScroll(true);
     const ctx = gsap.context(() => {
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
         content: "#smooth-content",
         smooth: 1.2,
+        smoothTouch: 2,
         effects: true,
       });
 
@@ -212,8 +225,8 @@ export default function Home() {
             x: 0,
           },
           {
-            y: 360,
-            x: 65,
+            y: yTarget,
+            x: xTarget,
             ease: "power3.out",
             duration: 5,
           },
@@ -342,7 +355,7 @@ export default function Home() {
         <div id="smooth-content">
           <div
             ref={mainImageRef}
-            className="h-screen w-screen bg-no-repeat relative bg-cover z-0" // <-- REMOVED 'fixed'
+            className="h-screen w-screen bg-no-repeat relative bg-center bg-cover z-0" // <-- REMOVED 'fixed'
             style={{ backgroundImage: `url("/images/somnath-temple.jpg")` }}
           >
             <div
@@ -353,17 +366,17 @@ export default function Home() {
 
             <div
               ref={mainTextRef}
-              className="p-8 text-white absolute flex flex-col items-center bottom-35 left-0 right-0"
+              className="p-8 text-white relative bottom-[49vh] md:bottom-[50vh] left-0 right-0"
               style={{ transformStyle: "preserve-3d" }}
             >
               <h1
-                className="text-8xl font-bold mb-4"
+                className="text-7xl md:text-8xl text-center font-bold mb-4"
                 style={{ fontFamily: "BystanderSans , sans-serif" }}
               >
                 The Divine Odyssey
               </h1>
               <p
-                className="text-4xl  "
+                className="text-3xl text-center md:text-4xl  "
                 style={{ fontFamily: "America, sans-serif" }}
               >
                 Traversing through temples, tales, and timeless traditions.
@@ -372,17 +385,17 @@ export default function Home() {
 
             <div
               ref={introTextRef}
-              className="p-8 text-white absolute flex flex-col items-center bottom-25 left-0 right-0"
+              className="p-8 text-white relative flex flex-col items-center bottom-[81vh] md:bottom-[77vh] left-0 right-0"
               style={{ transformStyle: "preserve-3d" }}
             >
               <h1
-                className="text-8xl font-bold mb-4"
+                className="text-7xl md:text-8xlfont-bold mb-4"
                 style={{ fontFamily: "BystanderSans , sans-serif" }}
               >
                 INTRODUCTION
               </h1>
               <p
-                className="text-1xl break-words whitespace-normal text-center max-w-[60ch]"
+                className="text-1xl md:text-2xl break-words whitespace-normal text-center max-w-[60ch]"
                 style={{ fontFamily: "CinzelDecorative, sans-serif" }}
               >
                 Hi, I’m Shivam — a software developer and traveler who loves
@@ -417,7 +430,7 @@ export default function Home() {
 
             <div
               ref={secondSectionTabRef}
-              className="absolute bottom-10 left-0 right-0 w-full max-w-4xl mx-auto bg-zinc-800 p-2.5 rounded-2xl shadow-4xl styled-scrollbar"
+              className="absolute bottom-10 left-0 right-0 h-[calc(100vh-20vh)] md:h-auto w-full max-w-4xl mx-auto bg-zinc-800 p-2.5 rounded-2xl shadow-4xl styled-scrollbar"
             >
               <div
                 className="h-full w-full aspect-[16/10] rounded-lg relative overflow-hidden flex flex-col bg-cover"
@@ -525,7 +538,7 @@ export default function Home() {
 
           <div
             style={{ backgroundImage: `url("/images/TempleBackground.png")` }}
-            className="relative h-screen w-screen bg-cover bg-center overflow-hidden"
+            className="relative h-screen w-screen bg-cover bg-center overflow-hidden hidden md:block"
           >
             <div
               ref={garlandRef}

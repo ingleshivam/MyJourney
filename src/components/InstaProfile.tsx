@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import {
   Heart,
   MessageCircle,
@@ -44,6 +45,8 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
   const [messageText, setMessageText] = useState("");
   const [activeTab, setActiveTab] = useState("posts");
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const screenWidth = window.innerWidth;
+
   console.log("Selected Post : ", selectedPost);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -335,7 +338,12 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
       className="absolute inset-0 h-full w-full overflow-hidden bg-white"
     >
       <div className="w-full h-full flex bg-black">
-        <div className="w-20 border-r border-gray-800 flex flex-col items-center py-6 gap-8 bg-black mt-1 overflow-hidden">
+        <div
+          className={clsx(
+            "w-20 border-r border-gray-800 flex flex-col items-center py-6 gap-8 bg-black mt-1 overflow-hidden",
+            screenWidth < 640 ? "hidden" : "block"
+          )}
+        >
           <div className="mb-2 rounded-full  flex items-center justify-center ">
             <img src="/icons/InstagramIcon.png" className="w-[24px] h-[24px]" />
           </div>
@@ -377,10 +385,18 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
         <div className="flex-1 overflow-y-auto bg-black">
           <div className=" px-8 py-6">
             <div className="flex items-start justify-between mb-6">
-              <div className="flex gap-8 items-start flex-1">
+              <div
+                className={clsx(
+                  "flex gap-8 flex-1",
+                  screenWidth < 640 ? "items-center" : "items-start"
+                )}
+              >
                 <div className="flex-shrink-0">
                   <div
-                    className="w-32 h-32 rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 p-1"
+                    className={clsx(
+                      "rounded-full bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 p-1",
+                      screenWidth < 640 ? "w-16 h-16" : "w-32 h-32"
+                    )}
                     style={{
                       boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
                     }}
@@ -397,36 +413,46 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
 
                 <div className="flex-1 pt-2">
                   <div className="flex items-center gap-4 mb-4">
-                    <h1 className="text-[20px] font-bold text-white">
+                    <h1 className="text-[14px] md:text-[20px] font-bold text-white">
                       theunknowntraveller___
                     </h1>
-                    <button className="px-6 py-1.5 bg-gray-800 text-white rounded-lg font-semibold text-sm hover:bg-gray-700 transition">
+                    <button className="px-2 md:px-6   py-1.5 bg-gray-800 text-white rounded-lg font-semibold text-xs md:text-sm hover:bg-gray-700 transition">
                       Edit profile
                     </button>
-                    <button className="px-6 py-1.5 bg-gray-800 text-white rounded-lg font-semibold text-sm hover:bg-gray-700 transition">
+                    <button className="hidden md:block px-6 py-1.5 bg-gray-800 text-white rounded-lg font-semibold text-sm hover:bg-gray-700 transition">
                       View archive
                     </button>
-                    <button className="text-gray-400 hover:text-white transition">
+                    <button className="hidden md:block text-gray-400 hover:text-white transition">
                       <Settings size={20} />
                     </button>
                   </div>
 
                   <div className="flex gap-8 mb-4">
                     <div className="flex items-center gap-1">
-                      <p className="text-white font-bold">12</p>
-                      <p className="text-gray-400 text-sm">posts</p>
+                      <p className="text-white font-bold text-sm md:text-md">
+                        12
+                      </p>
+                      <p className="text-gray-400 text-xs md:text-sm">posts</p>
                     </div>
                     <div className="flex items-center gap-1">
-                      <p className="text-white font-bold">1</p>
-                      <p className="text-gray-400 text-sm">follower</p>
+                      <p className="text-white font-bold text-sm md:text-md">
+                        1
+                      </p>
+                      <p className="text-gray-400 text-xs md:text-sm">
+                        follower
+                      </p>
                     </div>
                     <div className="flex items-center gap-1">
-                      <p className="text-white font-bold">1</p>
-                      <p className="text-gray-400 text-sm">following</p>
+                      <p className="text-white font-bold text-sm md:text-md">
+                        1
+                      </p>
+                      <p className="text-gray-400 text-xs md:text-sm">
+                        following
+                      </p>
                     </div>
                   </div>
 
-                  <div className="text-sm text-white">
+                  <div className="text-xs md:text-sm text-white">
                     <p className="font-semibold mb-1">theunknowntraveller___</p>
                     <p className="text-gray-300 mb-2">
                       💻 Software Developer | 🌍 Traveler at Heart Code on
@@ -566,7 +592,7 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
           onClick={handleClosePostDialog}
         >
           <div
-            className="bg-black rounded-2xl grid grid-cols-2 flex justify-center shadow-2xl border border-gray-800 overflow-hidden"
+            className="bg-black rounded-2xl grid grid-cols-1 md:grid-cols-2 flex justify-center shadow-2xl border border-gray-800 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div>
@@ -669,7 +695,7 @@ export default function InstaProfile({ ref }: InstaProfileProps) {
 
             {/* Footer */}
             <div className="flex flex-col justify-between">
-              <div className="text-white text-[14px]">
+              <div className="text-white text-[14px] hidden md:block">
                 <div className="flex items-center gap-3 px-4 pt-4">
                   <div>
                     <img
