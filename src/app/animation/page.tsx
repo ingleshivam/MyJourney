@@ -77,13 +77,13 @@ export default function Home() {
     );
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    let ramJanmaBhoomiTitle = SplitText.create(".ramJanmaBhoomiTitle", {
+    const ramJanmaBhoomiTitle = SplitText.create(".ramJanmaBhoomiTitle", {
       type: "words, chars",
     });
-    let ramJanmaBhoomiDesc = SplitText.create(".ramJanmaBhoomiDesc", {
+    const ramJanmaBhoomiDesc = SplitText.create(".ramJanmaBhoomiDesc", {
       type: "words, chars",
     });
-    let ramJanmaBhoomiEnding = SplitText.create(".ramJanmaBhoomiEnding", {
+    const ramJanmaBhoomiEnding = SplitText.create(".ramJanmaBhoomiEnding", {
       type: "words, chars",
     });
 
@@ -352,9 +352,10 @@ export default function Home() {
                     verdict that granted the land for the construction of a
                     Hindu temple. Following this decision, the grand Shri Ram
                     Mandir, built in the traditional Nagara style of
-                    architecture, was constructed. The new temple's consecration
-                    ceremony (Pran Pratishtha) took place on January 22, 2024,
-                    marking a significant event for devotees worldwide.
+                    architecture, was constructed. The new temple&apos;s
+                    consecration ceremony (Pran Pratishtha) took place on
+                    January 22, 2024, marking a significant event for devotees
+                    worldwide.
                   </p>
 
                   <div className="pt-3">

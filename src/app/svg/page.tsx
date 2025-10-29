@@ -315,8 +315,8 @@ export default function Home() {
                 Jaigad Fort, a 16th-century coastal stronghold in Ratnagiri,
                 sits majestically on a cliff overlooking the confluence of the
                 Shastri River and the Arabian Sea. Once a key naval base for
-                Maratha Admiral Kanhoji Angre, this "Fort of Victory" offers
-                stunning panoramic views. Visitors can explore its intact
+                Maratha Admiral Kanhoji Angre, this &quot;Fort of Victory&quot;
+                offers stunning panoramic views. Visitors can explore its intact
                 ramparts, deep moat, a small Ganesh temple, and a nearby
                 lighthouse, all standing as testaments to its strategic maritime
                 past.
@@ -336,12 +336,13 @@ export default function Home() {
               >
                 Devghali Beach, a secluded gem in Kasheli near Ratnagiri, is a
                 pristine, crescent-shaped beach surrounded on three sides by
-                lush hills. Its name, translating to "God's Passage," alludes to
-                its most famous feature: a stunning sea cave. This tranquil,
-                non-commercial spot offers clear turquoise waters and a "table
-                point" viewpoint for breathtaking panoramic views and sunsets.
-                It's an ideal escape for solitude and appreciating raw,
-                untouched coastal beauty.
+                lush hills. Its name, translating to &quot;God&apos;s
+                Passage,&quot; alludes to its most famous feature: a stunning
+                sea cave. This tranquil, non-commercial spot offers clear
+                turquoise waters and a &quot;table point&quot; viewpoint for
+                breathtaking panoramic views and sunsets. It&apos;s an ideal
+                escape for solitude and appreciating raw, untouched coastal
+                beauty.
               </InfoPoint>
               {/* Prayagraj - The Sangam City Section */}
               <InfoPoint
@@ -355,10 +356,10 @@ export default function Home() {
                 imageAlt="Prayagraj - The Sangam City"
                 title="Prayagraj - The Sangam City"
               >
-                Prayagraj, formerly Allahabad, is revered as "The Sangam City,"
-                a sacred Hindu pilgrimage destination. It is defined by the
-                Triveni Sangam, the holy confluence of India's three most
-                significant rivers: the Ganga, the Yamuna, and the mythical
+                Prayagraj, formerly Allahabad, is revered as &quot;The Sangam
+                City,&quot; a sacred Hindu pilgrimage destination. It is defined
+                by the Triveni Sangam, the holy confluence of India&apos;s three
+                most significant rivers: the Ganga, the Yamuna, and the mythical
                 Saraswati. This divine meeting point is the epicenter of faith,
                 globally renowned for hosting the monumental Maha Kumbh Mela,
                 the largest religious gathering on Earth, where millions bathe
@@ -378,12 +379,12 @@ export default function Home() {
               >
                 Nestled on the pristine Konkan coast, the 400-year-old Ganesh
                 Mandir at Ganpatipule is a revered pilgrimage site. It houses a
-                rare "Swayambhu" (self-manifested) idol of Lord Ganesha,
-                believed to have sprung from the soil. Uniquely, this deity
-                faces west, guarding the coast as the "Paschim Dwar Devata"
-                (Western Sentinel God). The temple is uniquely situated directly
-                on the white-sand beach, allowing devotees to combine spiritual
-                homage with serene coastal beauty.
+                rare &quot;Swayambhu&quot; (self-manifested) idol of Lord
+                Ganesha, believed to have sprung from the soil. Uniquely, this
+                deity faces west, guarding the coast as the &quot;Paschim Dwar
+                Devata&quot; (Western Sentinel God). The temple is uniquely
+                situated directly on the white-sand beach, allowing devotees to
+                combine spiritual homage with serene coastal beauty.
               </InfoPoint>
               {/* Panhala Fort */}
               <InfoPoint
@@ -401,7 +402,7 @@ export default function Home() {
                 historical site 20 km from Kolhapur. Built in the 12th century,
                 it holds immense Maratha history, as Chhatrapati Shivaji Maharaj
                 spent over 500 days here. It is famously associated with the
-                legendary Battle of Pavan Khind, detailing Shivaji's daring
+                legendary Battle of Pavan Khind, detailing Shivaji&apos;s daring
                 escape. Key structures include the Teen Darwaza (Three Gates),
                 massive Ambarkhana granaries, and the Sajja Kothi, offering
                 panoramic views of the Sahyadri range.
@@ -424,7 +425,7 @@ export default function Home() {
                 trinity: Brahma, Vishnu, and Shiva. He is the guardian deity who
                 aided Goddess Mahalakshmi in her battle against demons. The
                 temple is famous for its vibrant Chaitra Yatra, where devotees
-                shower the complex with pink 'gulal'.
+                shower the complex with pink &apos;gulal&apos;.
               </InfoPoint>
             </svg>
           </div>
