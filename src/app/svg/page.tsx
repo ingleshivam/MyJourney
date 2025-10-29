@@ -28,7 +28,7 @@ export default function Home() {
   const secondSectionRef = useRef<HTMLDivElement>(null);
   const secondSectionTabRef = useRef<SVGSVGElement>(null);
 
-  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 1024;
+  // const screenWidth = typeof window !== "undefined" ? window.innerWidth : 1024;
 
   useEffect(() => {
     const handleLoad = () => setIsLoading(false);

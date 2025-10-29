@@ -4,20 +4,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+// import { MotionPathHelper } from "gsap/MotionPathHelper";
+import InfoPoint from "@/components/InfoPoint";
 import React from "react";
-import {
-  Wifi,
-  Signal,
-  Battery,
-  MousePointer2,
-  MousePointerClick,
-  Twitter,
-  Instagram,
-  Linkedin,
-} from "lucide-react";
-import InstaProfile from "@/components/InstaProfile";
 import LoadingScreen from "@/components/LoadingScreen";
-import Link from "next/link";
+
 interface AppIconProps {
   Icon: string;
   name: string;
@@ -28,52 +21,37 @@ interface AppIconProps {
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  const mainImageRef = useRef(null);
-  const vectorImageRef = useRef(null);
-  const mainTextRef = useRef(null);
-  const introTextRef = useRef(null);
-  const secondSectionRef = useRef(null);
-  const secondSectionTextRef = useRef(null);
-  const secondSectionTabRef = useRef(null);
-  const mousePointerRef = useRef(null);
-  const splashScreeenRef = useRef(null);
-  const profileRef = useRef(null);
-  const hideIconsRef = useRef(null);
-  const designOuterRef = useRef(null);
-  const designInnerRef = useRef(null);
-  const garlandRef = useRef(null);
-  const garlandRef1 = useRef(null);
-  const screenWidth = window.innerWidth;
-  useEffect(() => {
-    const handleLoad = () => {
-      setIsLoading(false);
-    };
+  const mainImageRef = useRef<HTMLDivElement>(null);
+  const vectorImageRef = useRef<HTMLDivElement>(null);
+  const mainTextRef = useRef<HTMLDivElement>(null);
+  const introTextRef = useRef<HTMLDivElement>(null);
+  const secondSectionRef = useRef<HTMLDivElement>(null);
+  const secondSectionTabRef = useRef<SVGSVGElement>(null);
 
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad);
-      return () => window.removeEventListener("load", handleLoad);
-    }
+  // const screenWidth = typeof window !== "undefined" ? window.innerWidth : 1024;
+
+  useEffect(() => {
+    const handleLoad = () => setIsLoading(false);
+
+    if (document.readyState === "complete") handleLoad();
+    else window.addEventListener("load", handleLoad);
+
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   useLayoutEffect(() => {
     if (isLoading) return;
 
-    let xTarget, yTarget;
-    if (screenWidth < 640) {
-      xTarget = 65;
-      yTarget = 540;
-    } else if (screenWidth < 1024) {
-      xTarget = 50;
-      yTarget = 300;
-    } else {
-      xTarget = 65;
-      yTarget = 360;
-    }
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    gsap.registerPlugin(
+      ScrollTrigger,
+      ScrollSmoother,
+      DrawSVGPlugin,
+      MotionPathPlugin
+      // MotionPathHelper
+    );
     ScrollTrigger.config({ ignoreMobileResize: true });
     ScrollTrigger.normalizeScroll(true);
+
     const ctx = gsap.context(() => {
       const smoother = ScrollSmoother.create({
         wrapper: "#smooth-wrapper",
@@ -83,6 +61,7 @@ export default function Home() {
         effects: true,
       });
 
+      // Main image scale
       gsap.fromTo(
         mainImageRef.current,
         { scale: 1 },
@@ -95,11 +74,11 @@ export default function Home() {
             end: "+=500",
             scrub: 1,
             pin: true,
-            markers: false,
           },
         }
       );
 
+      // Vector overlay scale
       gsap.fromTo(
         vectorImageRef.current,
         { scale: 1 },
@@ -111,19 +90,14 @@ export default function Home() {
             start: "top top",
             end: "+=500",
             scrub: 1,
-            markers: false,
           },
         }
       );
 
+      // Main text fade out
       gsap.fromTo(
         mainTextRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-        },
+        { opacity: 1, y: 0, scale: 1, rotationX: 0 },
         {
           opacity: 0,
           y: -50,
@@ -135,19 +109,14 @@ export default function Home() {
             start: "0% 50%",
             end: "0% 40%",
             scrub: 1,
-            markers: false,
           },
         }
       );
 
+      // Intro text fade in
       gsap.fromTo(
         introTextRef.current,
-        {
-          opacity: 0,
-          y: 100,
-          scale: 0.8,
-          rotationX: 45,
-        },
+        { opacity: 0, y: 100, scale: 0.8, rotationX: 45 },
         {
           opacity: 1,
           y: 0,
@@ -159,187 +128,73 @@ export default function Home() {
             start: "0% 60%",
             end: "0% 40%",
             scrub: 1,
-            markers: false,
           },
         }
       );
 
-      ScrollTrigger.create({
-        trigger: secondSectionRef.current,
-        start: "top top",
-        end: "+=4000",
-        scrub: true,
-        pin: true,
-        markers: false,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: secondSectionRef.current,
-          start: "top top",
-          end: "+=4000",
-          scrub: true,
-        },
-      });
-
-      tl.fromTo(
-        secondSectionTextRef.current,
-        {
-          opacity: 0,
-          y: 100,
-          scale: 0.8,
-          rotationX: 45,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-          ease: "power3.out",
-          duration: 3,
-        },
-        "+=0.5"
-      )
-        .fromTo(
-          secondSectionTabRef.current,
-          {
-            opacity: 0,
-            y: 100,
-            scale: 0.8,
-            rotationX: 45,
-          },
-          {
-            opacity: 1,
-            y: 0,
+      const pulses = gsap
+        .timeline({
+          defaults: {
+            duration: 0.009,
+            autoAlpha: 1.5,
             scale: 1,
-            rotationX: 0,
-            duration: 3,
-            ease: "power3.out",
+            transformOrigin: "center",
+            ease: "elastic(2.5, 1)",
           },
-          "+=0.5"
-        )
-        .fromTo(
-          mousePointerRef.current,
-          {
-            y: 20,
-            x: 0,
-          },
-          {
-            y: yTarget,
-            x: xTarget,
-            ease: "power3.out",
-            duration: 5,
-          },
-          "+=0.5"
-        );
+        })
+        .to(".ball02, .text01", { opacity: 1 }, 0.01)
+        .to(".ball03, .text02", {}, 0.03)
+        .to(".ball04, .text03", {}, 0.05)
+        .to(".ball05, .text04", {}, 0.08)
+        .to(".ball06, .text05", {}, 0.101)
+        .to(".ball07, .text06", {}, 0.123)
+        .to(".ball08, .text07", {}, 0.163);
 
-      tl.fromTo(
-        splashScreeenRef.current,
-        {
-          scale: 0,
-        },
-        {
-          scale: 1,
-          duration: 2,
-          delay: 1,
-          ease: "power3.out",
-        },
-        "+=0.5"
-      ).fromTo(
-        profileRef.current,
-        {
-          scale: 0,
-        },
-        {
-          scale: 1,
-          duration: 2,
-          delay: 1,
-          ease: "power3.out",
-        },
-        "<"
-      );
-
-      tl.to(splashScreeenRef.current, {
-        opacity: 0,
-        duration: 1,
-        zIndex: -1,
-        ease: "power1.inOut",
-      })
+      const main = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: "#svg",
+            scrub: 1,
+            // start: "top +=50",
+            start: "top +=50",
+            end: "bottom top+=300",
+            markers: true,
+          },
+        })
+        .to(".ball01", { duration: 0.01, autoAlpha: 1 })
+        .from(".theLine", { drawSVG: 0 }, 0)
         .to(
-          hideIconsRef.current,
+          ".ball01",
           {
-            opacity: 0,
-            duration: 1,
-            zIndex: -1,
-            ease: "power1.inOut",
+            motionPath: {
+              path: ".theLine",
+              align: ".theLine",
+              alignOrigin: [0.5, 0.5],
+              autoRotate: true,
+            },
           },
-          "<"
+          0
         )
-        .to(
-          mousePointerRef.current,
-          {
-            opacity: 0,
-            duration: 1,
-            zIndex: -1,
-            ease: "power1.inOut",
-          },
-          "<"
-        )
-        .to({}, {}, "+=5");
-
-      gsap.to(designOuterRef.current, {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: "linear",
-        transformOrigin: "50% 50%",
-      });
-
-      gsap.to(designInnerRef.current, {
-        rotation: -360,
-        duration: 4,
-        repeat: -1,
-        ease: "linear",
-        transformOrigin: "center center",
-      });
-
-      gsap.to(garlandRef.current, {
-        rotation: 8,
-        duration: 2,
-        transformOrigin: "top left",
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(garlandRef1.current, {
-        rotation: -8,
-        duration: 2,
-        transformOrigin: "top right",
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      return () => ctx.revert();
+        .add(pulses, 0);
     });
+
+    // MotionPathHelper.create(".ball01");
+
+    return () => ctx.revert();
   }, [isLoading]);
 
   const AppIcon: React.FC<AppIconProps> = ({
     Icon,
     name,
     color = "bg-white/20",
-  }) => {
-    return (
-      <div className="flex flex-col items-center justify-start space-y-1.5 w-20 h-20">
-        <img width="50" height="50" src={Icon} />
-
-        <span className="text-white text-xs font-light tracking-wide truncate w-full text-center">
-          {name}
-        </span>
-      </div>
-    );
-  };
+  }) => (
+    <div className="flex flex-col items-center justify-start space-y-1.5 w-20 h-20">
+      <img width="50" height="50" src={Icon} />
+      <span className="text-white text-xs font-light tracking-wide truncate w-full text-center">
+        {name}
+      </span>
+    </div>
+  );
 
   return (
     <>
@@ -353,9 +208,10 @@ export default function Home() {
         }}
       >
         <div id="smooth-content">
+          {/* Hero Section */}
           <div
             ref={mainImageRef}
-            className="h-screen w-screen bg-no-repeat relative bg-center bg-cover z-0" // <-- REMOVED 'fixed'
+            className="h-screen w-screen bg-no-repeat relative bg-center bg-cover z-0"
             style={{ backgroundImage: `url("/images/somnath-temple.jpg")` }}
           >
             <div
@@ -376,7 +232,7 @@ export default function Home() {
                 The Divine Odyssey
               </h1>
               <p
-                className="text-3xl text-center md:text-4xl  "
+                className="text-3xl text-center md:text-4xl"
                 style={{ fontFamily: "America, sans-serif" }}
               >
                 Traversing through temples, tales, and timeless traditions.
@@ -389,7 +245,7 @@ export default function Home() {
               style={{ transformStyle: "preserve-3d" }}
             >
               <h1
-                className="text-7xl md:text-8xlfont-bold mb-4"
+                className="text-7xl md:text-8xl font-bold mb-4"
                 style={{ fontFamily: "BystanderSans , sans-serif" }}
               >
                 INTRODUCTION
@@ -405,182 +261,175 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Second section */}
           <div
             ref={secondSectionRef}
-            className="relative bg-black h-screen w-screen z-20 mb-10"
+            className="relative w-full z-20 flex items-center justify-start "
           >
-            <div
-              ref={secondSectionTextRef}
-              className="text-white flex flex-col items-center justify-center p-3"
+            <svg
+              id="svg"
+              viewBox="-60 -100 820 800"
+              className="w-screen h-[200vh]"
             >
-              <h1
-                className="text-4xl font-bold mb-4"
-                style={{ fontFamily: "BystanderSans , sans-serif" }}
-              >
-                Moments Captured
-              </h1>
-              <p
-                className="text-1xl break-words whitespace-normal text-center max-w-[60ch]"
-                style={{ fontFamily: "CinzelDecorative, sans-serif" }}
-              >
-                A glimpse into my travel moments — captured, shared, and
-                remembered.
-              </p>
-            </div>
+              <circle className="ball ball01" r="8" cx="50" cy="100"></circle>
+              <path
+                className="theLine"
+                fill="none"
+                // d="M-50.311,-0.001 C40.689,-0.001 527.217,0.202 617.275,0 749.036,-0.297 747.628,194.17 615.089,192.822 500.37,191.655 142.468,191.999 85.152,191.999 -47.816,191.999 -52.466,373.999 81.503,375.999 139.158,375.999 544.825,375.335 602.543,375.998 746.135,377.646 746.778,561.538 599.883,561.897 456.0153,562.248 85.632,560.725 -4.603,561.267 -5.991,561.275 -7.752,653.236 -7.295,657.005 "
+                d="M-50.311,-0.001 C40.689,-0.001 527.217,0.202 617.275,0 749.036,-0.297 747.628,194.17 615.089,192.822 500.37,191.655 142.468,191.999 85.152,191.999 -47.816,191.999 -52.467,382.54 81.502,384.54 139.156,384.54 559.342,383.019 617.063,383.685 760.654,385.328 747.198,575.187 617.817,575.552 473.942,575.951 85.632,575.669 -4.603,576.214 -5.991,576.217 -7.752,653.236 -7.295,657.005 "
+              ></path>
 
-            <div
-              ref={secondSectionTabRef}
-              className="absolute bottom-10 left-0 right-0 h-[calc(100vh-20vh)] md:h-auto w-full max-w-4xl mx-auto bg-zinc-800 p-2.5 rounded-2xl shadow-4xl styled-scrollbar"
-            >
-              <div
-                className="h-full w-full aspect-[16/10] rounded-lg relative overflow-hidden flex flex-col bg-cover"
-                style={{
-                  backgroundImage: `url("/images/samsung-wallpaper.png")`,
-                }}
+              {/* Ram JanmaBhoomi Section */}
+              <InfoPoint
+                ballClassName="ball ball02"
+                textClassName="text01 infoCard"
+                circleCx="100"
+                circleCy="0"
+                foreignObjectX="0"
+                foreignObjectY="20"
+                imageSrc="/posts/RamJanmabhoomi1.webp"
+                imageAlt="Shri Ram Janmabhoomi"
+                title="Shri Ram Janmabhoomi, Ayodhya"
               >
-                <img
-                  ref={splashScreeenRef}
-                  src="/images/InstaSplash.png"
-                  className="z-10 absolute h-full object-cover"
-                />
-                <InstaProfile ref={profileRef} />
-                <div
-                  ref={hideIconsRef}
-                  className="absolute top-0 right-0 h-10 px-6 flex justify-end items-center space-x-2 text-white/90"
-                >
-                  <span className="text-sm font-semibold">10:30</span>
-                  <Wifi size={16} />
-                  <Signal size={16} />
-                  <Battery size={16} />
-                </div>
-                <span
-                  ref={mousePointerRef}
-                  className="w-fit h-fit relative flex self-center"
-                >
-                  <MousePointer2 />
-                </span>
+                Shri Ram Janmabhoomi in Ayodhya, Uttar Pradesh, is revered by
+                Hindus as the birthplace of Lord Rama, the seventh avatar of
+                Vishnu. This sacred site has been a focal point of devotion for
+                centuries and is a major pilgrimage destination. It was the
+                center of a long-standing legal dispute, which culminated in a
+                2019 Supreme Court verdict that granted the land for the
+                construction of a Hindu temple.
+              </InfoPoint>
 
-                <div className="flex flex-col items-center justify-end h-full space-y-3">
-                  <div className="flex justify-center items-start space-x-10">
-                    <AppIcon
-                      Icon={"/icons/GalaxyStore.png"}
-                      name="Galaxy Store"
-                      color="bg-zinc-100"
-                      iconColor="#5A409A"
-                    />
-                    <AppIcon
-                      Icon={"/icons/Contacts.png"}
-                      name="Contacts"
-                      color="bg-blue-500"
-                    />
-                    <AppIcon
-                      Icon={"/icons/Email.png"}
-                      name="Email"
-                      color="bg-purple-600"
-                    />
-                    <AppIcon
-                      Icon={"/icons/Instagram.png"}
-                      name="Instagram"
-                      color="bg-gradient-to-br from-pink-500 via-red-500 to-orange-400"
-                    />
-                    <AppIcon
-                      Icon={"/icons/GalaxyThemes.png"}
-                      name="Galaxy Themes"
-                      color="bg-blue-600"
-                    />
-                    <AppIcon
-                      Icon={"/icons/Gallery.png"}
-                      name="Gallery"
-                      color="bg-white"
-                      iconColor="#4285F4"
-                    />
-                  </div>
+              {/* Jaigad Fort Section */}
+              <InfoPoint
+                ballClassName="ball ball03"
+                textClassName="text02 infoCard"
+                circleCx="330"
+                circleCy="0"
+                foreignObjectX="230"
+                foreignObjectY="20"
+                imageSrc="/posts/Jaigad1.webp"
+                imageAlt="Jaigad Fort"
+                title="Jaigad Fort, Ratnagiri"
+              >
+                Jaigad Fort, a 16th-century coastal stronghold in Ratnagiri,
+                sits majestically on a cliff overlooking the confluence of the
+                Shastri River and the Arabian Sea. Once a key naval base for
+                Maratha Admiral Kanhoji Angre, this &quot;Fort of Victory&quot;
+                offers stunning panoramic views. Visitors can explore its intact
+                ramparts, deep moat, a small Ganesh temple, and a nearby
+                lighthouse, all standing as testaments to its strategic maritime
+                past.
+              </InfoPoint>
 
-                  <div className="flex items-center justify-center space-x-8  px-6 py-4">
-                    <AppIcon
-                      Icon={"/icons/Messages.png"}
-                      name="Messages"
-                      color="bg-purple-200"
-                      iconColor="#603F8B"
-                    />
-                    <AppIcon
-                      Icon={"/icons/SamsungPay.png"}
-                      name="Samsung Pay"
-                      color="bg-orange-400"
-                    />
-                    <AppIcon
-                      Icon={"/icons/MyFiles.png"}
-                      name="My Files"
-                      color="bg-white"
-                      iconColor="#34A853"
-                    />
-                    <AppIcon
-                      Icon={"/icons/Phone.png"}
-                      name="Phone"
-                      color="bg-blue-500"
-                    />
-                    <AppIcon
-                      Icon={"/icons/SamsungInternet.png"}
-                      name="Samsung Internet"
-                      color="bg-white"
-                      iconColor="#DB4437"
-                    />
-                    <AppIcon
-                      Icon={"/icons/SamsungNotes.png"}
-                      name="Samsung Notes"
-                      color="bg-red-500"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+              {/* Devghali Beach Section */}
+              <InfoPoint
+                ballClassName="ball ball04"
+                textClassName="text03 infoCard"
+                circleCx="560"
+                circleCy="0"
+                foreignObjectX="460"
+                foreignObjectY="20"
+                imageSrc="/posts/Devghali1.webp"
+                imageAlt="Devghali Beach"
+                title="Devghali Beach, Kasheli"
+              >
+                Devghali Beach, a secluded gem in Kasheli near Ratnagiri, is a
+                pristine, crescent-shaped beach surrounded on three sides by
+                lush hills. Its name, translating to &quot;God&apos;s
+                Passage,&quot; alludes to its most famous feature: a stunning
+                sea cave. This tranquil, non-commercial spot offers clear
+                turquoise waters and a &quot;table point&quot; viewpoint for
+                breathtaking panoramic views and sunsets. It&apos;s an ideal
+                escape for solitude and appreciating raw, untouched coastal
+                beauty.
+              </InfoPoint>
+              {/* Prayagraj - The Sangam City Section */}
+              <InfoPoint
+                ballClassName="ball ball05"
+                textClassName="text04 infoCard"
+                circleCx="600"
+                circleCy="192"
+                foreignObjectX="500"
+                foreignObjectY="210"
+                imageSrc="/posts/Prayagraj1.webp"
+                imageAlt="Prayagraj - The Sangam City"
+                title="Prayagraj - The Sangam City"
+              >
+                Prayagraj, formerly Allahabad, is revered as &quot;The Sangam
+                City,&quot; a sacred Hindu pilgrimage destination. It is defined
+                by the Triveni Sangam, the holy confluence of India&apos;s three
+                most significant rivers: the Ganga, the Yamuna, and the mythical
+                Saraswati. This divine meeting point is the epicenter of faith,
+                globally renowned for hosting the monumental Maha Kumbh Mela,
+                the largest religious gathering on Earth, where millions bathe
+                to attain spiritual purification.
+              </InfoPoint>
+              {/* गणेश मंदिर, गणपतीपुळे */}
+              <InfoPoint
+                ballClassName="ball ball06"
+                textClassName="text05 infoCard"
+                circleCx="370"
+                circleCy="192"
+                foreignObjectX="270"
+                foreignObjectY="210"
+                imageSrc="/posts/GanpatiPule1.webp"
+                imageAlt="GaneshMandir"
+                title="गणेश मंदिर, गणपतीपुळे"
+              >
+                Nestled on the pristine Konkan coast, the 400-year-old Ganesh
+                Mandir at Ganpatipule is a revered pilgrimage site. It houses a
+                rare &quot;Swayambhu&quot; (self-manifested) idol of Lord
+                Ganesha, believed to have sprung from the soil. Uniquely, this
+                deity faces west, guarding the coast as the &quot;Paschim Dwar
+                Devata&quot; (Western Sentinel God). The temple is uniquely
+                situated directly on the white-sand beach, allowing devotees to
+                combine spiritual homage with serene coastal beauty.
+              </InfoPoint>
+              {/* Panhala Fort */}
+              <InfoPoint
+                ballClassName="ball ball07"
+                textClassName="text06 infoCard"
+                circleCx="140"
+                circleCy="192"
+                foreignObjectX="40"
+                foreignObjectY="210"
+                imageSrc="/posts/Panhala1.webp"
+                imageAlt="Panhala Fort"
+                title="Panhala Fort, Kolhapur"
+              >
+                Panhala Fort, the largest fort in the Deccan, is a vast
+                historical site 20 km from Kolhapur. Built in the 12th century,
+                it holds immense Maratha history, as Chhatrapati Shivaji Maharaj
+                spent over 500 days here. It is famously associated with the
+                legendary Battle of Pavan Khind, detailing Shivaji&apos;s daring
+                escape. Key structures include the Teen Darwaza (Three Gates),
+                massive Ambarkhana granaries, and the Sajja Kothi, offering
+                panoramic views of the Sahyadri range.
+              </InfoPoint>
+              {/* Jyotiba Temple, Wadi Ratnagiri Kolhapur. */}
+              <InfoPoint
+                ballClassName="ball ball08"
+                textClassName="text07 infoCard"
+                circleCx="100"
+                circleCy="385"
+                foreignObjectX="0"
+                foreignObjectY="405"
+                imageSrc="/posts/Jyotiba1.webp"
+                imageAlt="Jyotiba Temple, Wadi Ratnagiri Kolhapur."
+                title="Jyotiba Temple, Wadi Ratnagiri Kolhapur."
+              >
+                Perched atop a hill at Wadi Ratnagiri, the Jyotiba Temple is a
+                revered Hindu shrine 18 km northwest of Kolhapur. The deity,
+                Lord Jyotiba, is considered a powerful incarnation of the divine
+                trinity: Brahma, Vishnu, and Shiva. He is the guardian deity who
+                aided Goddess Mahalakshmi in her battle against demons. The
+                temple is famous for its vibrant Chaitra Yatra, where devotees
+                shower the complex with pink &apos;gulal&apos;.
+              </InfoPoint>
+            </svg>
           </div>
-
-          <div
-            style={{ backgroundImage: `url("/images/TempleBackground.png")` }}
-            className="relative h-screen w-screen bg-cover bg-center overflow-hidden hidden md:block"
-          >
-            <div
-              ref={garlandRef}
-              className="left-40 h-[65vh] w-full absolute bg-no-repeat bg-contain bg-left"
-              style={{ backgroundImage: `url("/images/Garlands.png")` }}
-            ></div>
-            <div
-              ref={garlandRef1}
-              className="right-40 h-[65vh] w-full absolute bg-no-repeat bg-contain bg-right"
-              style={{ backgroundImage: `url("/images/Garlands.png")` }}
-            ></div>
-
-            <div
-              ref={designOuterRef}
-              style={{ backgroundImage: `url("/images/Design.png")` }}
-              className="absolute inset-0 bg-contain bg-no-repeat bg-center"
-            ></div>
-
-            <div className="absolute inset-0 flex flex-col items-center justify-end">
-              <div
-                style={{ backgroundImage: `url("/images/Subtract.png")` }}
-                className="absolute bottom-0 h-[82vh] w-full bg-center bg-contain bg-no-repeat"
-              >
-                <div
-                  style={{
-                    backgroundImage: `url("/images/SomnathMahadevVector1.png")`,
-                  }}
-                  className="mix-blend-multiply absolute top-[30vh] left-1/2 -translate-x-1/2 w-[20%] h-[18%] bg-center bg-contain bg-no-repeat"
-                ></div>
-
-                <div
-                  style={{
-                    fontFamily: "BystanderSans, sans-serif",
-                    color: "#FBF3E5",
-                  }}
-                  className="absolute bottom-48 w-full text-[10vh] flex justify-center"
-                >
-                  JAI SOMNATH
-                </div>
-              </div>
-            </div>
-          </div>
+          <div style={{ height: "100vh" }} />
         </div>
       </div>
     </>
