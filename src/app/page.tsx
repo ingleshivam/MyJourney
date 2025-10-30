@@ -10,6 +10,7 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import InfoPoint from "@/components/InfoPoint";
 import React from "react";
 import LoadingScreen from "@/components/LoadingScreen";
+import Link from "next/link";
 
 interface AppIconProps {
   Icon: string;
@@ -142,23 +143,24 @@ export default function Home() {
             ease: "elastic(2.5, 1)",
           },
         })
-        .to(".ball02, .text01", { opacity: 1 }, 0.01)
+        .to(".ball02, .text01", { opacity: 1 }, 0.012)
         .to(".ball03, .text02", {}, 0.03)
         .to(".ball04, .text03", {}, 0.05)
         .to(".ball05, .text04", {}, 0.08)
         .to(".ball06, .text05", {}, 0.101)
         .to(".ball07, .text06", {}, 0.123)
-        .to(".ball08, .text07", {}, 0.163);
+        .to(".ball08, .text07", {}, 0.163)
+        .to(".ball09, .text08", {}, 0.189)
+        .to(".ball10, .text09", {}, 0.218);
 
       const main = gsap
         .timeline({
           scrollTrigger: {
             trigger: "#svg",
             scrub: 1,
-            // start: "top +=50",
             start: "top +=50",
             end: "bottom top+=300",
-            markers: true,
+            // markers: true,
           },
         })
         .to(".ball01", { duration: 0.01, autoAlpha: 1 })
@@ -209,6 +211,10 @@ export default function Home() {
       >
         <div id="smooth-content">
           {/* Hero Section */}
+
+          <p className="text-white text-right px-6 mt-2 w-full">
+            <Link href={""}>VERSION 2</Link>
+          </p>
           <div
             ref={mainImageRef}
             className="h-screen w-screen bg-no-repeat relative bg-center bg-cover z-0"
@@ -427,9 +433,51 @@ export default function Home() {
                 temple is famous for its vibrant Chaitra Yatra, where devotees
                 shower the complex with pink &apos;gulal&apos;.
               </InfoPoint>
+              {/* Jyotiba Temple, Wadi Ratnagiri Kolhapur. */}
+              <InfoPoint
+                ballClassName="ball ball09"
+                textClassName="text08 infoCard"
+                circleCx="330"
+                circleCy="384"
+                foreignObjectX="230"
+                foreignObjectY="405"
+                imageSrc="/posts/Dwarka1.webp"
+                imageAlt="Dwarkadhish Temple, Dwarka"
+                title="Dwarkadhish Temple, Dwarka"
+              >
+                The Dwarkadhish Temple, also known as the Jagat Mandir, is a
+                sacred Hindu shrine in Dwarka, Gujarat, dedicated to Lord
+                Krishna (the &quot;King of Dwarka&quot;). Believed to be built
+                over 2,500 years ago by Krishna&apos;s great-grandson,
+                Vajranabha, it is a key site of the Char Dham pilgrimage. This
+                magnificent five-story limestone structure, supported by 72
+                pillars, rises majestically on the banks of the Gomti River,
+                drawing millions of devotees.
+              </InfoPoint>
+              {/* Ambabai Temple, Kolhapur. */}
+              <InfoPoint
+                ballClassName="ball ball10"
+                textClassName="text09 infoCard"
+                circleCx="560"
+                circleCy="384"
+                foreignObjectX="460"
+                foreignObjectY="405"
+                imageSrc="/posts/Mahalaxmi1.webp"
+                imageAlt="Ambabai Temple, Kolhapur."
+                title="Ambabai Temple, Kolhapur."
+              >
+                The Ambabai Temple, also known as the Shri Karveer Niwasini
+                Mahalakshmi Temple, is a premier Hindu pilgrimage site in
+                Kolhapur, Maharashtra. It is revered as one of the
+                three-and-a-half Shakti Peethas of goddess Shakti, making it one
+                of Indias most significant goddess shrines. Devotees worship the
+                presiding deity, Goddess Mahalakshmi (Ambabai), as the goddess
+                of wealth and prosperity, and believe a visit here can grant
+                liberation or fulfill desires.
+              </InfoPoint>
             </svg>
           </div>
-          <div style={{ height: "100vh" }} />
+          <div className="bg-red-400" style={{ height: "100vh" }} />
         </div>
       </div>
     </>

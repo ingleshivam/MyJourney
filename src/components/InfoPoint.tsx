@@ -39,9 +39,9 @@ const InfoPoint: React.FC<InfoPointProps> = ({
           alt={imageAlt}
           className="object-cover aspect-square rounded-full w-14 h-14"
         />
-        <div className="w-full space-y-1 text-justify text-center">
-          <p className="font-semibold">{title}</p>
-          <p>{children}</p>
+        <div className="w-full space-y-1  text-center">
+          <p className="font-semibold text-left text-[8px]">{title}</p>
+          <p className="text-justify text-[6px]">{children}</p>
         </div>
       </div>
     </foreignObject>
